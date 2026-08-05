@@ -1,0 +1,13 @@
+{
+  "name": "owm-example-wallet-chat",
+  "private": true,
+  "type": "module",
+  "description": "The simplest OWM on-ramp: two wallets meet via an SMS pairing code, then chat on the XMTP dev network",
+  "scripts": {
+    "demo": "node demo.mjs"
+  },
+  "dependencies": {
+    "@xmtp/node-sdk": "^6.0.0",
+    "viem": "^2.41.0"
+  }
+}

@@ -1,0 +1,17 @@
+Open Wallet Messaging — TypeScript reference implementation
+
+Copyright 2026 Saxon Herschel Nicholls and the Open Wallet Messaging
+Foundation Authors.
+
+Licensed under the Apache License, Version 2.0
+(Apache-2.0); the full text is in LICENSE.
+
+MARKS AND CONFORMANCE: this licence covers the DOCUMENTS. It does not grant
+rights in the "Open Wallet Messaging" or "OWM" names or logos, and it is not
+a certification of conformance. An implementation may state that it
+implements Open Wallet Messaging; claims of conformance are governed by the
+conformance vectors published in the owm-api repository.
+
+NO AFFILIATION: Open Wallet Messaging is not associated or affiliated in any
+way with the OpenWallet Foundation (openwallet.foundation), a project of the
+Linux Foundation.

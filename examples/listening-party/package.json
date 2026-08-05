@@ -1,0 +1,19 @@
+{
+  "name": "owm-example-listening-party",
+  "private": true,
+  "type": "module",
+  "description": "OWM example — a private concert between friends: a synced listening party over the XMTP dev network, where the room is the venue, the invite is the ticket, and eviction is cryptographic (OWM-STAGE, kinds 540-542)",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@xmtp/browser-sdk": "^7.0.0",
+    "viem": "^2.41.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-basic-ssl": "^2.1.0",
+    "vite": "^7.0.0"
+  }
+}

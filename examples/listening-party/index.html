@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <title>OWM listening party</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>OWM <span>listening party</span></h1>
+      <div id="banner" hidden>
+        <code id="me-address" title="your address"></code>
+        <span class="dot">·</span> inbox <code id="me-inbox" title="your XMTP inboxId"></code>
+        <span class="dot">·</span> network <b>dev</b>
+      </div>
+    </header>
+
+    <main>
+      <!-- 1. identity -->
+      <section id="connect">
+        <p>
+          A private concert between friends: one room, one link, everyone in
+          sync — end-to-end encrypted on the real XMTP <b>dev</b> network.
+          Pick an identity:
+        </p>
+        <div class="row">
+          <button id="btn-mm">Connect wallet</button>
+          <button id="btn-burner" class="secondary">Use a burner wallet</button>
+        </div>
+        <p id="mm-hint" class="hint" hidden>
+          No wallet detected — open this page inside the MetaMask app's
+          browser (or a desktop browser with the extension), or use a burner.
+        </p>
+        <div id="burner-reveal" hidden>
+          <p><b>Your burner private key — shown only this once:</b></p>
+          <div class="row"><code id="burner-key"></code><button id="btn-copy-key" class="secondary">copy</button></div>
+          <p class="warn">⚠ Dev-network toy identity. Do <b>not</b> fund or reuse it.</p>
+        </div>
+      </section>
+
+      <!-- 2a. host a party -->
+      <section id="host" hidden>
+        <form id="host-form">
+          <div class="row">
+            <input id="party-name" placeholder="party name (e.g. Friday Night Set)" maxlength="64" autocomplete="off" />
+            <input id="party-capacity" type="number" min="1" max="200" value="12" title="capacity = maxUses on the door token" />
+            <button id="btn-host">Start the party</button>
+          </div>
+          <p class="hint">
+            Creates an admin-only MLS room (the venue) and ONE door link
+            (the ticket): capacity = uses, doors close in 2 h, token rides
+            the <code>#t=</code> fragment only.
+          </p>
+        </form>
+      </section>
+
+      <!-- 2b. arriving via a door link -->
+      <section id="knock" hidden>
+        <p id="knock-line">You're on the guest list…</p>
+        <div class="row">
+          <input id="guest-name" placeholder="your name at the party (optional)" maxlength="32" autocomplete="off" />
+          <button id="btn-knock">Knock on the door</button>
+        </div>
+        <p class="hint" id="knock-status"></p>
+      </section>
+
+      <!-- DJ share panel -->
+      <section id="share" hidden>
+        <p><b>The door link — share it with your friends:</b></p>
+        <div class="row"><code id="invite-link"></code><button id="btn-copy-link" class="secondary">copy</button></div>
+        <p class="hint">
+          Text it: <code>node ../web-chat/send-invites.mjs "&lt;link&gt;" +61…</code>
+          — or drop it in the group chat. The token never leaves the fragment.
+          <span id="invite-uses"></span>
+        </p>
+      </section>
+
+      <!-- 3. the stage -->
+      <section id="stage" hidden>
+        <div id="stage-head">
+          <div>
+            <div id="stage-title">—</div>
+            <div id="stage-sub">waiting for the DJ…</div>
+          </div>
+          <div id="fingerprint" title="room fingerprint — everyone's screen must show the same (member-list SAS)">…</div>
+        </div>
+
+        <div id="now-playing" class="idle">
+          <div id="np-disc">💿</div>
+          <div>
+            <div id="np-track">nothing yet</div>
+            <div id="np-pos">0:00</div>
+          </div>
+        </div>
+
+        <!-- DJ controls -->
+        <div id="dj-controls" hidden>
+          <div class="row">
+            <select id="track-pick"></select>
+            <button id="btn-play">▶ play</button>
+            <button id="btn-pause" class="secondary" hidden>⏸ pause</button>
+            <button id="btn-jar" class="secondary" title="open a signed donation request (wm-broadcast-request 546)">💰 open tip jar</button>
+          </div>
+        </div>
+
+        <!-- tip jar — rendered ONLY for a verified, role-bound 546 -->
+        <div id="tipjar" hidden>
+          <div id="jar-head">💰 <b>Tip jar</b> · <span id="jar-memo"></span></div>
+          <div class="row">
+            <code id="jar-target"></code>
+            <button id="btn-copy-target" class="secondary">copy</button>
+            <button id="btn-tipped">🪙 I tipped</button>
+          </div>
+          <p class="hint">
+            Signed by the performer over these receive addresses — an
+            unsigned copy shows no button (that's the OWM-PAY
+            anti-poisoning rule). Settlement happens in your wallet; this room never
+            carries value. Receipts here are self-reported.
+          </p>
+        </div>
+
+        <!-- audience: enter (audio unlock) + cues -->
+        <button id="btn-enter" hidden>🔊 tap to enter the party</button>
+        <div id="cues" hidden>
+          <button class="cue" data-cue="raise-hand" title="ask to say something">🙋</button>
+          <button class="cue" data-cue="encore" title="one more!">🎶 encore</button>
+        </div>
+
+        <!-- reactions (float on everyone's screen) -->
+        <div id="reactions">
+          <button class="react">🎉</button><button class="react">🔥</button>
+          <button class="react">💃</button><button class="react">🫶</button>
+          <button class="react">🍾</button>
+        </div>
+
+        <!-- DJ: who's in the room -->
+        <div id="members" hidden>
+          <p class="hint">In the room (tap ✕ to bounce — eviction is MLS-enforced):</p>
+          <ul id="member-list"></ul>
+        </div>
+
+        <!-- chat -->
+        <div id="chat">
+          <div id="messages"></div>
+          <form id="composer" class="row">
+            <input id="draft" placeholder="say something…" autocomplete="off" />
+            <button id="btn-send">Send</button>
+          </form>
+        </div>
+      </section>
+
+      <!-- 4. bounced -->
+      <section id="bounced" hidden>
+        <p class="big">🚪 The room closed on you.</p>
+        <p class="hint">
+          You were removed — the MLS epoch rotated, so new messages (and the
+          music) are cryptographically out of reach. That's the bouncer.
+        </p>
+      </section>
+    </main>
+
+    <div id="float-layer"></div>
+    <div id="toasts"></div>
+    <p id="status">ready — choose an identity above</p>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,52 @@
+{
+  "name": "@open-wallet-messaging/core",
+  "version": "0.0.1",
+  "description": "Open Wallet Messaging core: strict envelopes, kind registry, secure contact exchange, wallet auth, payments and file sealing \u2014 pure logic, @noble crypto only",
+  "keywords": [
+    "owm",
+    "open-wallet-messaging",
+    "wallet",
+    "messaging",
+    "xmtp",
+    "mls",
+    "e2ee",
+    "ethereum",
+    "spake2",
+    "attestation",
+    "signing"
+  ],
+  "license": "Apache-2.0",
+  "author": "Saxon Herschel Nicholls and the Open Wallet Messaging Foundation Authors",
+  "homepage": "https://owm.foundation",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/open-wallet-messaging-foundation/owm-ts.git",
+    "directory": "packages/owm-core"
+  },
+  "bugs": {
+    "url": "https://github.com/open-wallet-messaging-foundation/owm-ts/issues"
+  },
+  "type": "module",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE",
+    "NOTICE"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@noble/curves": "^2.2.0",
+    "@noble/hashes": "^2.2.0"
+  }
+}

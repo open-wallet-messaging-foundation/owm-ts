@@ -1,0 +1,10 @@
+{
+  "name": "owm-live-smoke",
+  "private": true,
+  "type": "module",
+  "description": "Live smoke test on the real XMTP dev network — drives @open-wallet-messaging/core invite + envelope logic through real MLS groups/DMs",
+  "dependencies": {
+    "@xmtp/node-sdk": "^6.0.0",
+    "viem": "^2.41.0"
+  }
+}

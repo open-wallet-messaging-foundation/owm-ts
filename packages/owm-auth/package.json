@@ -1,0 +1,50 @@
+{
+  "name": "@open-wallet-messaging/auth",
+  "version": "0.0.1",
+  "description": "Open Wallet Messaging auth: wallet-held second factor, sign-in, scoped capability grants and an OIDC bridge \u2014 a drop-in seam for TOTP-style verification",
+  "keywords": [
+    "owm",
+    "open-wallet-messaging",
+    "authentication",
+    "2fa",
+    "siwe",
+    "oidc",
+    "capability",
+    "grant",
+    "wallet",
+    "ethereum"
+  ],
+  "license": "Apache-2.0",
+  "author": "Saxon Herschel Nicholls and the Open Wallet Messaging Foundation Authors",
+  "homepage": "https://owm.foundation",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/open-wallet-messaging-foundation/owm-ts.git",
+    "directory": "packages/owm-auth"
+  },
+  "bugs": {
+    "url": "https://github.com/open-wallet-messaging-foundation/owm-ts/issues"
+  },
+  "type": "module",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE",
+    "NOTICE"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@open-wallet-messaging/core": "^0.0.1"
+  }
+}

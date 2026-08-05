@@ -1,0 +1,8 @@
+# Sponsor button shown on every repository in this organisation.
+# Custom URLs work immediately and need no approval. The github: line
+# activates only once GitHub Sponsors is configured for the org — it stays
+# commented until then, so the button never advertises a payment route
+# that does not exist.
+custom:
+  - https://owm.foundation/#/donate
+# github: [open-wallet-messaging-foundation]

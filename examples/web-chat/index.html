@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>OWM web chat</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>OWM <span>web chat</span></h1>
+      <div id="banner" hidden>
+        <code id="me-address" title="your address"></code>
+        <span class="dot">·</span> inbox <code id="me-inbox" title="your XMTP inboxId"></code>
+        <span class="dot">·</span> network <b>dev</b>
+        <span class="dot">·</span> storage <span id="me-storage"></span>
+      </div>
+    </header>
+
+    <main>
+      <section id="connect">
+        <p>
+          Chat wallet-to-wallet, end-to-end encrypted, on the real XMTP
+          <b>dev</b> network. Pick an identity:
+        </p>
+        <div class="row">
+          <button id="btn-mm">Connect wallet</button>
+          <button id="btn-burner" class="secondary">Use a burner wallet</button>
+        </div>
+        <p id="mm-hint" class="hint" hidden>
+          No wallet detected on this page — open it inside the MetaMask app's
+          browser (or a desktop browser with the extension), or use a burner.
+        </p>
+        <div id="burner-reveal" hidden>
+          <p><b>Your burner private key — shown only this once:</b></p>
+          <div class="row">
+            <code id="burner-key"></code>
+            <button id="btn-copy-key" class="secondary">copy</button>
+          </div>
+          <p class="warn">
+            ⚠ This is a dev-network toy identity. Do <b>not</b> fund this key
+            or use it for anything real. It is stored in this browser's
+            localStorage so your address survives a reload.
+          </p>
+        </div>
+      </section>
+
+      <section id="newchat" hidden>
+        <form id="open-form" class="row">
+          <input
+            id="peer"
+            placeholder="0x… address to chat with"
+            autocomplete="off"
+            spellcheck="false"
+          />
+          <button id="btn-open">Open chat</button>
+        </form>
+        <p class="hint">
+          …or just wait: when someone messages you first, the chat opens by
+          itself. Tip: an SMS'd link like <code>#peer=0x…</code> prefills this.
+        </p>
+        <form id="room-form" class="row">
+          <input
+            id="room-name"
+            placeholder="room name (e.g. Founders)"
+            autocomplete="off"
+          />
+          <button id="btn-room" type="submit" class="secondary">Start a room</button>
+        </form>
+        <p class="hint">
+          A room is a private admin-only MLS group — share its invite link and
+          admit whoever knocks. Three people, two phones and a laptop: that's
+          the point.
+        </p>
+        <div id="room-share" hidden>
+          <p><b>Room open.</b> Text this link to the others (token rides the
+          <code>#fragment</code> only — it never reaches a server):</p>
+          <div class="row">
+            <code id="room-link"></code>
+            <button id="btn-copy-link" type="button" class="secondary">copy</button>
+          </div>
+          <p class="hint" id="room-door"></p>
+        </div>
+      </section>
+
+      <section id="knock" hidden>
+        <p id="knock-line"></p>
+        <div class="row">
+          <button id="btn-knock">Knock to join</button>
+        </div>
+        <p class="hint" id="knock-status"></p>
+      </section>
+
+      <section id="chat" hidden>
+        <div id="peer-line"></div>
+        <div id="messages"></div>
+        <form id="composer" class="row">
+          <input id="draft" placeholder="type a message…" autocomplete="off" />
+          <button id="btn-send">Send</button>
+          <button id="btn-ping" type="button" class="secondary" title="send a wm-ping OWM envelope">
+            ping
+          </button>
+        </form>
+      </section>
+    </main>
+
+    <p id="status">ready — choose an identity above</p>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

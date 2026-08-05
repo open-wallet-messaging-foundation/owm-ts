@@ -1,0 +1,125 @@
+/* Minimal, phone-first. No framework, no build magic — just a chat page. */
+
+:root {
+  --accent: #3b6ef6;
+  --edge: color-mix(in srgb, CanvasText 18%, transparent);
+  --soft: color-mix(in srgb, CanvasText 7%, transparent);
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+body {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 0.75rem 1rem 3.5rem;
+  line-height: 1.45;
+}
+
+header h1 {
+  font-size: 1.25rem;
+  margin: 0.25rem 0 0.5rem;
+}
+header h1 span { font-weight: 400; opacity: 0.65; }
+
+#banner {
+  font-size: 0.8rem;
+  border: 1px solid var(--edge);
+  border-radius: 0.5rem;
+  padding: 0.4rem 0.6rem;
+  overflow-wrap: anywhere;
+}
+#banner code { font-size: 0.75rem; }
+.dot { opacity: 0.45; margin: 0 0.15rem; }
+
+section { margin: 1rem 0; }
+.row { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; }
+
+button {
+  font: inherit;
+  padding: 0.45rem 0.9rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+}
+button.secondary { background: transparent; color: inherit; border-color: var(--edge); }
+button:disabled { opacity: 0.45; cursor: default; }
+
+input {
+  font: inherit;
+  flex: 1;
+  min-width: 12rem;
+  padding: 0.45rem 0.6rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--edge);
+  background: transparent;
+  color: inherit;
+}
+
+.hint { font-size: 0.8rem; opacity: 0.7; }
+.warn { font-size: 0.85rem; }
+
+#burner-reveal {
+  border: 1px solid var(--edge);
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  margin-top: 0.75rem;
+}
+#burner-key {
+  overflow-wrap: anywhere;
+  font-size: 0.75rem;
+  flex: 1;
+}
+
+#peer-line { font-size: 0.8rem; opacity: 0.75; margin-bottom: 0.4rem; overflow-wrap: anywhere; }
+
+#messages {
+  border: 1px solid var(--edge);
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  min-height: 14rem;
+  max-height: 55vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 0.5rem;
+}
+
+.bubble {
+  max-width: 85%;
+  padding: 0.35rem 0.6rem;
+  border-radius: 0.7rem;
+  background: var(--soft);
+  align-self: flex-start;
+  overflow-wrap: anywhere;
+}
+.bubble.mine { background: var(--accent); color: #fff; align-self: flex-end; }
+.bubble .meta { display: block; font-size: 0.65rem; opacity: 0.6; }
+
+/* An OWM envelope rendered as a labeled chip: kind name + pretty JSON. */
+.chip {
+  border-left: 3px solid var(--accent);
+  background: var(--soft);
+  border-radius: 0.35rem;
+  padding: 0.3rem 0.55rem;
+  font-size: 0.75rem;
+}
+.chip.bad { border-left-color: #d64545; }
+.chip .kind { font-weight: 600; display: block; }
+.chip pre { margin: 0.2rem 0 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+
+.fallback { font-style: italic; opacity: 0.7; }
+
+#status {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 0;
+  padding: 0.45rem 1rem;
+  font-size: 0.8rem;
+  background: Canvas;
+  border-top: 1px solid var(--edge);
+}
+#status.error { color: #d64545; }

@@ -1,0 +1,21 @@
+{
+  "name": "owm-example-web-chat",
+  "private": true,
+  "type": "module",
+  "description": "Minimal OWM web messenger: chat wallet-to-wallet in any browser (MetaMask mobile in-app browser, desktop extension, or a burner key) over the XMTP dev network",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "e2e": "node e2e.mjs"
+  },
+  "dependencies": {
+    "@xmtp/browser-sdk": "^7.0.0",
+    "viem": "^2.41.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-basic-ssl": "^2.1.0",
+    "puppeteer-core": "^24.0.0",
+    "vite": "^7.0.0"
+  }
+}

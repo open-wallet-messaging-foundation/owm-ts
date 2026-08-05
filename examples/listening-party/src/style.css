@@ -1,0 +1,140 @@
+/* OWM listening party — a dark stage. Same bones as ../web-chat, plus the
+   now-playing glow and the floating-reaction layer. */
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0 auto;
+  max-width: 720px;
+  padding: 0 1rem 3rem;
+  font: 16px/1.45 system-ui, -apple-system, sans-serif;
+  background: radial-gradient(1200px 600px at 50% -10%, #251b3f 0%, #12101c 55%, #0b0a12 100%);
+  color: #eae6f7;
+  min-height: 100dvh;
+}
+
+header { display: flex; flex-wrap: wrap; align-items: baseline; gap: .75rem; padding: 1rem 0 .5rem; }
+h1 { font-size: 1.3rem; margin: 0; letter-spacing: .02em; }
+h1 span { color: #b39ddb; font-weight: 400; }
+#banner { font-size: .8rem; color: #9f97b8; }
+.dot { opacity: .5; margin: 0 .3rem; }
+
+code {
+  background: #1d1930; border: 1px solid #322a52; border-radius: 6px;
+  padding: .1rem .4rem; font-size: .85em; word-break: break-all;
+}
+
+section { margin: 1rem 0; }
+.row { display: flex; gap: .5rem; flex-wrap: wrap; align-items: center; }
+.row input { flex: 1 1 12rem; }
+
+input, select {
+  background: #171327; color: inherit; border: 1px solid #3a3160;
+  border-radius: 10px; padding: .6rem .8rem; font-size: 1rem;
+}
+input:focus, select:focus { outline: 2px solid #7e57c2; border-color: transparent; }
+input[type="number"] { flex: 0 0 5.5rem; }
+
+button {
+  background: #7e57c2; color: #fff; border: 0; border-radius: 10px;
+  padding: .6rem 1rem; font-size: 1rem; cursor: pointer;
+}
+button:hover { background: #9575cd; }
+button:disabled { opacity: .45; cursor: default; }
+button.secondary { background: #2a2344; color: #cfc6ea; border: 1px solid #453a6e; }
+button.secondary:hover { background: #352c55; }
+
+.hint { color: #9f97b8; font-size: .85rem; }
+.warn { color: #ffb74d; font-size: .85rem; }
+.big { font-size: 1.4rem; }
+
+/* --- stage ----------------------------------------------------------------- */
+
+#stage-head { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+#stage-title { font-size: 1.25rem; font-weight: 600; }
+#stage-sub { color: #9f97b8; font-size: .85rem; }
+#fingerprint {
+  font-size: 1.05rem; background: #1d1930; border: 1px dashed #4a3f78;
+  border-radius: 10px; padding: .35rem .6rem; white-space: nowrap;
+}
+
+#now-playing {
+  display: flex; align-items: center; gap: 1rem; margin: 1rem 0;
+  background: #171327; border: 1px solid #322a52; border-radius: 14px; padding: 1rem;
+}
+#np-disc { font-size: 2.4rem; }
+#now-playing.playing #np-disc { animation: spin 4s linear infinite; }
+#now-playing.playing { box-shadow: 0 0 32px #7e57c266, inset 0 0 24px #7e57c222; }
+#np-track { font-weight: 600; }
+#np-pos { color: #9f97b8; font-variant-numeric: tabular-nums; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+#btn-enter { width: 100%; padding: 1rem; font-size: 1.15rem; margin: .5rem 0; }
+
+#cues, #reactions { display: flex; gap: .5rem; margin: .6rem 0; flex-wrap: wrap; }
+.cue, .react { background: #2a2344; border: 1px solid #453a6e; font-size: 1.1rem; }
+.react { padding: .5rem .8rem; }
+
+#tipjar {
+  margin: .8rem 0; padding: .8rem; border-radius: 14px;
+  background: #241d12; border: 1px solid #6b5426;
+  box-shadow: 0 0 24px #d4a11722;
+}
+#jar-head { margin-bottom: .5rem; }
+#btn-tipped { background: #b8860b; }
+#btn-tipped:hover { background: #d4a017; }
+
+#members ul { list-style: none; padding: 0; margin: .3rem 0; }
+#members li {
+  display: flex; align-items: center; gap: .6rem; padding: .3rem 0;
+  border-bottom: 1px solid #221c3a; font-size: .9rem;
+}
+#members .bounce { background: #4a2333; border: 1px solid #7c3a52; padding: .15rem .55rem; font-size: .8rem; }
+#members .role { color: #9f97b8; font-size: .75rem; }
+
+/* --- chat ------------------------------------------------------------------ */
+
+#messages {
+  height: 200px; overflow-y: auto; display: flex; flex-direction: column;
+  gap: .4rem; padding: .6rem; background: #12101cbb;
+  border: 1px solid #2a2344; border-radius: 12px; margin-bottom: .5rem;
+}
+.bubble {
+  align-self: flex-start; background: #221c3a; border-radius: 12px 12px 12px 4px;
+  padding: .45rem .7rem; max-width: 85%; font-size: .95rem;
+}
+.bubble.mine { align-self: flex-end; background: #37295e; border-radius: 12px 12px 4px 12px; }
+.bubble .meta { display: block; font-size: .68rem; color: #9f97b8; margin-top: .15rem; }
+.chip .kind {
+  display: inline-block; font-size: .7rem; letter-spacing: .04em;
+  color: #b39ddb; border: 1px solid #453a6e; border-radius: 6px;
+  padding: 0 .35rem; margin-bottom: .25rem;
+}
+.chip.bad .kind { color: #ff8a80; border-color: #7c3a52; }
+.chip pre { margin: 0; font-size: .75rem; white-space: pre-wrap; word-break: break-word; }
+
+/* --- floating reactions + toasts ------------------------------------------- */
+
+#float-layer { position: fixed; inset: 0; pointer-events: none; overflow: hidden; }
+.floater {
+  position: absolute; bottom: -3rem; font-size: 2rem;
+  animation: rise 3.2s ease-out forwards;
+}
+@keyframes rise {
+  20% { opacity: 1; }
+  to { transform: translateY(-85vh) rotate(18deg); opacity: 0; }
+}
+
+#toasts { position: fixed; top: .8rem; right: .8rem; display: flex; flex-direction: column; gap: .4rem; z-index: 10; }
+.toast {
+  background: #221c3a; border: 1px solid #453a6e; border-radius: 10px;
+  padding: .5rem .8rem; font-size: .85rem; animation: fadeout 4s forwards;
+}
+@keyframes fadeout { 0%, 75% { opacity: 1; } 100% { opacity: 0; } }
+
+#status {
+  position: fixed; left: 0; right: 0; bottom: 0; margin: 0;
+  padding: .45rem 1rem; font-size: .8rem; color: #9f97b8;
+  background: #0b0a12ee; border-top: 1px solid #221c3a;
+}
+#status.error { color: #ff8a80; }
